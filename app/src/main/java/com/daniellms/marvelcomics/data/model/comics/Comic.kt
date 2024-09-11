@@ -47,19 +47,19 @@ data class Comic(
     @SerializedName("series")
     var series: Series?,
     @SerializedName("stories")
-    var stories: com.daniellms.marvelcomics.data.model.comics.Stories?,
+    var stories: Stories?,
     @SerializedName("textObjects")
-    var textObjects: List<com.daniellms.marvelcomics.data.model.comics.TextObject>?,
+    var textObjects: List<TextObject>?,
     @SerializedName("thumbnail")
-    var thumbnail: com.daniellms.marvelcomics.data.model.comics.Thumbnail?,
+    var thumbnail: Thumbnail?,
     @SerializedName("title")
     var title: String?,
     @SerializedName("upc")
     var upc: String?,
     @SerializedName("urls")
-    var urls: List<com.daniellms.marvelcomics.data.model.comics.Url>?,
+    var urls: List<Url>?,
     @SerializedName("variantDescription")
     var variantDescription: String?,
     @SerializedName("variants")
-    var variants: List<com.daniellms.marvelcomics.data.model.comics.Variant>?
+    var variants: List<Variant>?
 )

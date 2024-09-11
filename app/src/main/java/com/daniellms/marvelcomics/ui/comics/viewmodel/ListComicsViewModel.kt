@@ -30,6 +30,9 @@ class ListComicsViewModel(
 
         _countComics.value += limit
 
+        if (_countComics.value > 100)
+            _countComics.value = 100
+
         val response = getComicsUseCase.invoke(_countComics.value)
         when (response.code()) {
             200 -> {

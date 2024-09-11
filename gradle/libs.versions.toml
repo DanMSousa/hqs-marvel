@@ -12,7 +12,7 @@ versionComposeLifecycle = "2.8.5"
 versionMaterial3 = "1.3.0"
 versionDaggerHilt = "2.48.1"
 versionHiltCompose = "1.2.0"
-versionRoom = "2.5.0"
+versionRoom = "2.6.1"
 versoinGsonRetrofit = "2.9.0"
 versionOkHttp = "4.9.3"
 appcompat = "1.7.0"
@@ -40,6 +40,9 @@ daggerhilt = { group = "com.google.dagger", name = "hilt-android", version.ref="
 daggerhilt-kapt = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref="versionDaggerHilt" }
 daggerhilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref="versionHiltCompose" }
 androidx-room = { group = "androidx.room", name = "room-ktx", version.ref="versionRoom" }
+androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref="versionRoom" }
+androidx-room-compiler-kapt = { group = "androidx.room", name = "room-compiler", version.ref="versionRoom" }
+
 squareup-gson = { group = "com.google.code.gson", name = "gson", version.ref="versoinGsonRetrofit" }
 squareup-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref="versoinGsonRetrofit" }
 squareup-gson-converter = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref="versoinGsonRetrofit" }
