@@ -7,9 +7,10 @@ import com.daniellms.marvelcomics.domain.usecase.SaveFavoriteComicUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 
 @Module
-@InstallIn
+@InstallIn(SingletonComponent::class)
 class FavoriteComicsUseCaseModule {
 
     @Provides

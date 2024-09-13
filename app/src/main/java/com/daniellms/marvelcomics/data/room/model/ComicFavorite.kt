@@ -4,10 +4,11 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "comic_favorite_table")
-class ComicFavorite(
-    @PrimaryKey val id: Int,
-    val title: String?,
-    val variantDescription: String?,
-    val imageUrl: String?,
+data class ComicFavorite(
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    var idComic: Int?,
+    var title: String?,
+    var variantDescription: String?,
+    var imageUrl: String?,
     var price: Double?
 )

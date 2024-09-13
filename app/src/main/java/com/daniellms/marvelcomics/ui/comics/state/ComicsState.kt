@@ -1,9 +1,10 @@
 package com.daniellms.marvelcomics.ui.comics.state
 
 import com.daniellms.marvelcomics.data.model.comics.Comic
+import com.daniellms.marvelcomics.ui.favorites.state.FavoritesState
 
 sealed class ComicsState {
-    object StartGet : ComicsState()
+    data object StartGet : ComicsState()
     data class SuccessGetComics(val listComics: List<Comic>) : ComicsState()
-    object ErrorGetComics : ComicsState()
+    data object ErrorGetComics : ComicsState()
 }

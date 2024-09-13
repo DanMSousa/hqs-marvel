@@ -1,6 +1,7 @@
 package com.daniellms.marvelcomics.data.model.comics
 
 
+import com.daniellms.marvelcomics.data.room.model.ComicFavorite
 import com.google.gson.annotations.SerializedName
 
 data class Comic(
@@ -61,5 +62,18 @@ data class Comic(
     @SerializedName("variantDescription")
     var variantDescription: String?,
     @SerializedName("variants")
-    var variants: List<Variant>?
-)
+    var variants: List<Variant>?,
+    var isFavorited: Boolean?,
+    var comicFavorited: ComicFavorite? = null
+) {
+
+    fun getComicToFavorite() : ComicFavorite {
+        return ComicFavorite(
+            idComic = this.id,
+            title = this.title,
+            variantDescription = this.variantDescription,
+            imageUrl = this.thumbnail?.path ?: ("" + "." + this.thumbnail?.extension),
+            price = this.prices?.getOrNull(0)?.price ?: 0.0
+        )
+    }
+}
