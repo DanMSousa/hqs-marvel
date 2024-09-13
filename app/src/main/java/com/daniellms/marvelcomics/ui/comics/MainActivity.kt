@@ -1,25 +1,30 @@
 package com.daniellms.marvelcomics.ui.comics
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -27,14 +32,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.asFlow
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
+import com.daniellms.core.layout.items.BoxItemBottomBorder
+import com.daniellms.core.layout.loading.ProgressLoadingCenter
 import com.daniellms.marvelcomics.ui.comics.viewmodel.ListComicsViewModel
 import com.daniellms.core.layout.theme.MarvelComicsTheme
 import com.daniellms.marvelcomics.data.model.comics.Comic
 import com.daniellms.marvelcomics.ui.comics.state.ComicsState
+import com.daniellms.marvelcomics.ui.favorites.FavoritesActivity
 import com.daniellms.marvelcomics.ui.favorites.state.FavoritesState
 import com.daniellms.marvelcomics.ui.favorites.viewmodel.FavoritesViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -55,19 +62,55 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MarvelComicsTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    ListItemsPaginated(
-                        listComicsViewModel,
-                        favoritesViewModel,
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                Scaffold(modifier = Modifier.fillMaxSize(),
+                    topBar = {
+                        TopAppBarComics(listComicsViewModel)
+                    }, content = { innerPadding ->
+                        ListItemsPaginated(
+                            listComicsViewModel,
+                            favoritesViewModel,
+                            modifier = Modifier.padding(innerPadding)
+                        )
+                    }
+                )
             }
         }
     }
 }
 
-// sobre o retorno da lista de favoritos e caso retorne de lá com alguém já deletado: criar mais um state "restart" e o usar o limite do count
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TopAppBarComics(listComicsViewModel: ListComicsViewModel) {
+    val context = LocalContext.current
+
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val data = result.data?.getStringExtra("favorite_status")
+            if (data == "back") {
+                listComicsViewModel.refreshListState()
+            }
+        }
+    }
+
+    TopAppBar(
+        title = { Text("Comics") },
+        actions = {
+            IconButton(onClick = {
+                val intent = Intent(context, FavoritesActivity::class.java)
+                launcher.launch(intent)
+            }) {
+                Icon(
+                    imageVector = Icons.Default.Favorite,
+                    contentDescription = "Favorite Button",
+                    tint = Color.Gray
+                )
+            }
+        }
+    )
+}
+
 @Composable
 fun ListItemsPaginated(
     viewModel: ListComicsViewModel = viewModel(),
@@ -83,9 +126,11 @@ fun ListItemsPaginated(
             is FavoritesState.SavedFavorite -> {
                 viewModel.refreshListState()
             }
+
             is FavoritesState.DeletedFavorite -> {
                 viewModel.refreshListState()
             }
+
             else -> Unit
         }
     }
@@ -105,7 +150,7 @@ fun ListItemsPaginated(
                     itemsIndexed(listComics) { index, item ->
                         ComicItem(item, index + 1) { isFavorited ->
                             if (isFavorited)
-                                favoritesViewModel.deleteFavorite(item)
+                                item.comicFavorited?.let { favoritesViewModel.deleteFavorite(it) }
                             else
                                 favoritesViewModel.saveFavorite(item)
                         }
@@ -119,7 +164,7 @@ fun ListItemsPaginated(
                     }
                 }
                 Text(
-                    text = "quantidade: ${listComics.size}",
+                    text = "Total: ${listComics.size}",
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier
                         .align(Alignment.Start)
@@ -130,36 +175,21 @@ fun ListItemsPaginated(
         }
 
         is ComicsState.ErrorGetComics -> {
-            Toast.makeText(LocalContext.current, "Error", Toast.LENGTH_LONG).show()
+            Toast.makeText(LocalContext.current, "Erro. Tente novamente.", Toast.LENGTH_LONG).show()
         }
 
         is ComicsState.StartGet -> {
             viewModel.getComics(LIMIT_GET_COMICS)
-            CircularProgressIndicator(modifier = Modifier.padding(16.dp))
+            ProgressLoadingCenter()
         }
 
         else -> Unit
     }
 }
 
-
 @Composable
 fun ComicItem(comic: Comic, orderIndex: Int, onFavoriteClick: (isFavorited: Boolean) -> Unit) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .drawBehind {
-                // Desenha uma linha na parte inferior
-                val strokeWidth = 0.8.dp.toPx() // Define a espessura da linha
-                val y = size.height - strokeWidth / 2  // Posiciona no final do Box
-                drawLine(
-                    color = Color.LightGray,  // Cor da linha
-                    strokeWidth = strokeWidth,
-                    start = androidx.compose.ui.geometry.Offset(0f, y),  // Início da linha
-                    end = androidx.compose.ui.geometry.Offset(size.width, y)  // Final da linha
-                )
-            }
-    ) {
+    BoxItemBottomBorder {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -201,9 +231,10 @@ fun ComicItem(comic: Comic, orderIndex: Int, onFavoriteClick: (isFavorited: Bool
             Icon(
                 imageVector = Icons.Default.Favorite,
                 contentDescription = "Favorite Button",
-                tint = if (comic.isFavorited == true) Color.Red else Color.Gray
+                tint = if (comic.isFavorited == true) Color.Red else Color.LightGray
             )
 
         }
     }
 }
+

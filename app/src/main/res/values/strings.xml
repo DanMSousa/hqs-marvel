@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">MarvelComics</string>
+    <string name="app_name">HQs Marvel</string>
+    <string name="label_favorites">Favoritos</string>
 </resources>

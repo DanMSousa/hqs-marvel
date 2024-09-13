@@ -7,8 +7,6 @@ import com.daniellms.marvelcomics.data.room.model.ComicFavorite
 import com.daniellms.marvelcomics.domain.usecase.GetComicsUseCase
 import com.daniellms.marvelcomics.domain.usecase.GetFavoriteComicsUseCase
 import com.daniellms.marvelcomics.ui.comics.state.ComicsState
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
 import com.daniellms.marvelcomics.data.model.comics.Comic
+import com.daniellms.marvelcomics.data.room.model.ComicFavorite
 import com.daniellms.marvelcomics.domain.usecase.DeleteFavoriteComicUseCase
 import com.daniellms.marvelcomics.domain.usecase.GetFavoriteComicsUseCase
 import com.daniellms.marvelcomics.domain.usecase.SaveFavoriteComicUseCase
@@ -23,7 +24,7 @@ class FavoritesViewModel(
 ) : ViewModel() {
 
     private var _favoriteMutableLiveData = MutableLiveData<FavoritesState>(FavoritesState.StartToGetFavorites)
-    val favoriteMutableLiveData : LiveData<FavoritesState> get() = _favoriteMutableLiveData
+    val favoriteMutableLiveData : LiveData<FavoritesState> = _favoriteMutableLiveData
 
     fun saveFavorite(comic: Comic) = viewModelScope.launch {
         try {
@@ -34,9 +35,9 @@ class FavoritesViewModel(
         }
     }
 
-    fun deleteFavorite(comic: Comic) = viewModelScope.launch {
+    fun deleteFavorite(comic: ComicFavorite) = viewModelScope.launch {
         try {
-            comic.comicFavorited?.let { deleteFavoriteComicUseCase.invoke(it) }
+            deleteFavoriteComicUseCase.invoke(comic)
             _favoriteMutableLiveData.value = FavoritesState.DeletedFavorite
         } catch (e: Exception) {
             e.printStackTrace()

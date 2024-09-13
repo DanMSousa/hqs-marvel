@@ -72,6 +72,8 @@ dependencies {
     implementation(libs.androidx.compose.lifecycle)
     implementation(libs.androidx.room)
     implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.compose.livedata)
+
     kapt(libs.androidx.room.compiler.kapt)
     implementation(libs.daggerhilt)
     kapt(libs.daggerhilt.kapt)

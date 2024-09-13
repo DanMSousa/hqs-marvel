@@ -72,7 +72,7 @@ data class Comic(
             idComic = this.id,
             title = this.title,
             variantDescription = this.variantDescription,
-            imageUrl = this.thumbnail?.path ?: ("" + "." + this.thumbnail?.extension),
+            imageUrl = this.thumbnail?.path + "." + this.thumbnail?.extension,
             price = this.prices?.getOrNull(0)?.price ?: 0.0
         )
     }
