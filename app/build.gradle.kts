@@ -88,6 +88,11 @@ dependencies {
     implementation(project(":core"))
 
     testImplementation(libs.junit)
+    testImplementation(libs.io.mockk.test)
+    testImplementation(libs.org.jetbrains.kotlinx.coroutines.test)
+    testImplementation(libs.org.jetbrains.kotlinx.test)
+    testImplementation(libs.androidx.arch.core.test)
+    testImplementation(libs.appCash.turbine)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))

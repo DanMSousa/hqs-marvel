@@ -19,6 +19,11 @@ versionOkHttp = "4.9.3"
 appcompat = "1.7.0"
 material = "1.12.0"
 versionCoilImageCompose = "2.4.0"
+versionMockk = "1.12.0"
+versionCoroutinesTest = "1.5.2"
+versionCoreTesting = "2.2.0"
+versionCacheTurbineTest = "0.8.0"
+versionKotlinTest = "1.7.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -44,6 +49,12 @@ daggerhilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigati
 androidx-room = { group = "androidx.room", name = "room-ktx", version.ref="versionRoom" }
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref="versionRoom" }
 androidx-room-compiler-kapt = { group = "androidx.room", name = "room-compiler", version.ref="versionRoom" }
+
+io-mockk-test = { group = "io.mockk", name = "mockk", version.ref="versionMockk" }
+org-jetbrains-kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref="versionCoroutinesTest" }
+org-jetbrains-kotlinx-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref="versionKotlinTest" }
+androidx-arch-core-test = { group = "androidx.arch.core", name = "core-testing", version.ref="versionCoreTesting" }
+appCash-turbine = { group = "app.cash.turbine", name = "turbine", version.ref="versionCacheTurbineTest" }
 
 squareup-gson = { group = "com.google.code.gson", name = "gson", version.ref="versoinGsonRetrofit" }
 squareup-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref="versoinGsonRetrofit" }

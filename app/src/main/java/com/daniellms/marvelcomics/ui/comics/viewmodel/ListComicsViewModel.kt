@@ -19,7 +19,7 @@ class ListComicsViewModel(
 ) : ViewModel() {
     private var isLoading = false
 
-    private var _comicsState = MutableStateFlow<ComicsState?>(ComicsState.StartGet)
+    private var _comicsState = MutableStateFlow<ComicsState>(ComicsState.StartGet)
     val comicsState : StateFlow<ComicsState?> get() = _comicsState.asStateFlow()
 
     private var _currentListComics = MutableStateFlow<List<Comic>>(emptyList())

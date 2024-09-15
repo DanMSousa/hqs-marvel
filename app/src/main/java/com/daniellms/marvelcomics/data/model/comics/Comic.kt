@@ -6,64 +6,64 @@ import com.google.gson.annotations.SerializedName
 
 data class Comic(
     @SerializedName("characters")
-    var characters: Characters?,
+    var characters: Characters? = null,
     @SerializedName("collectedIssues")
-    var collectedIssues: List<CollectedIssue>?,
+    var collectedIssues: List<CollectedIssue>? = null,
     @SerializedName("collections")
-    var collections: List<Collection>?,
+    var collections: List<Collection>? = null,
     @SerializedName("creators")
-    var creators: Creators?,
+    var creators: Creators? = null,
     @SerializedName("dates")
-    var dates: List<Date>?,
+    var dates: List<Date>? = null,
     @SerializedName("description")
-    var description: String?,
+    var description: String? = null,
     @SerializedName("diamondCode")
-    var diamondCode: String?,
+    var diamondCode: String? = null,
     @SerializedName("digitalId")
-    var digitalId: Int?,
+    var digitalId: Int? = null,
     @SerializedName("ean")
-    var ean: String?,
+    var ean: String? = null,
     @SerializedName("events")
-    var events: Events?,
+    var events: Events? = null,
     @SerializedName("format")
-    var format: String?,
+    var format: String? = null,
     @SerializedName("id")
-    var id: Int?,
+    var id: Int? = null,
     @SerializedName("images")
-    var images: List<Image>?,
+    var images: List<Image>? = null,
     @SerializedName("isbn")
-    var isbn: String?,
+    var isbn: String? = null,
     @SerializedName("issn")
-    var issn: String?,
+    var issn: String? = null,
     @SerializedName("issueNumber")
-    var issueNumber: Int?,
+    var issueNumber: Int? = null,
     @SerializedName("modified")
-    var modified: String?,
+    var modified: String? = null,
     @SerializedName("pageCount")
-    var pageCount: Int?,
+    var pageCount: Int? = null,
     @SerializedName("prices")
-    var prices: List<Price>?,
+    var prices: List<Price>? = null,
     @SerializedName("resourceURI")
-    var resourceURI: String?,
+    var resourceURI: String? = null,
     @SerializedName("series")
-    var series: Series?,
+    var series: Series? = null,
     @SerializedName("stories")
-    var stories: Stories?,
+    var stories: Stories? = null,
     @SerializedName("textObjects")
-    var textObjects: List<TextObject>?,
+    var textObjects: List<TextObject>? = null,
     @SerializedName("thumbnail")
-    var thumbnail: Thumbnail?,
+    var thumbnail: Thumbnail? = null,
     @SerializedName("title")
-    var title: String?,
+    var title: String? = null,
     @SerializedName("upc")
-    var upc: String?,
+    var upc: String? = null,
     @SerializedName("urls")
-    var urls: List<Url>?,
+    var urls: List<Url>? = null,
     @SerializedName("variantDescription")
-    var variantDescription: String?,
+    var variantDescription: String? = null,
     @SerializedName("variants")
-    var variants: List<Variant>?,
-    var isFavorited: Boolean?,
+    var variants: List<Variant>? = null,
+    var isFavorited: Boolean? = null,
     var comicFavorited: ComicFavorite? = null
 ) {
 
